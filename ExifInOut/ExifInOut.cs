@@ -1,11 +1,10 @@
 ﻿using ImageMagick;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace ExifInput
-{
+
     public class ExifInput
     {
-        static void Repalce (ExifTag<string> tag, string path)
+        static public void Repalce(ExifTag<string> tag, string path)
         {
             MagickImage image = new MagickImage(path);
             using (image)
@@ -24,12 +23,17 @@ namespace ExifInput
 
         }
 
-        static void WriteExif (string path)
+        static public void WriteExif(string path)
         {
             MagickImage image = new MagickImage(path);
-            var profile = image.GetExifProfile() ?? new ExifProfile();
+            var profile = image.GetExifProfile();
+            if (profile == null)
+            {
+                Console.WriteLine("Exif данных нет");
+                return;
+            }
             foreach (var value in profile.Values)
                 Console.Write(value.ToString());
         }
     }
-}
+

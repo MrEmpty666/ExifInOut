@@ -4,7 +4,7 @@ using static System.Net.Mime.MediaTypeNames;
 
     public class ExifInput
     {
-        static public void Repalce(ExifTag<string> tag, string path)
+        static public void Replace(ExifTag<string> tag, string path, string text)
         {
             MagickImage image = new MagickImage(path);
             using (image)
@@ -13,8 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 
                 // Устанавливаем текстовые значения
                 Console.Write(tag.ToString() + ": ");
-                var str = Console.ReadLine().ToString();
-                profile.SetValue(tag, str);
+                profile.SetValue(tag, text);
                 // Добавляем профиль к изображению
                 image.SetProfile(profile);
                 // Сохраняем результат
@@ -23,17 +22,15 @@ using static System.Net.Mime.MediaTypeNames;
 
         }
 
-        static public void WriteExif(string path)
+        static public string GetExifText(string path)
         {
             MagickImage image = new MagickImage(path);
             var profile = image.GetExifProfile();
             if (profile == null)
             {
-                Console.WriteLine("Exif данных нет");
-                return;
+                return "Exif данных нет";
             }
-            foreach (var value in profile.Values)
-                Console.Write(value.ToString());
+        return string.Join("\n",profile.Values);
         }
     }
-
+                          

@@ -6,7 +6,14 @@
         xmlns:local="clr-namespace:Dekstop"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid HorizontalAlignment="Center" Width="800" Height="434" VerticalAlignment="Bottom">
-
+    <Grid HorizontalAlignment="Center" Width="800" Height="434" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5">
+        <Rectangle HorizontalAlignment="Left" Height="41" Margin="42,167,0,0" Stroke="Black" VerticalAlignment="Top" Width="221"/>
+        <Border Name="DropArea" BorderBrush="Gray" BorderThickness="2" CornerRadius="5" AllowDrop="True" Background="LightGray" DragEnter="DropArea_DragEnter" Drop="DropArea_Drop" Margin="464,23,36,217">
+            <TextBlock Text="Перетащите сюда картинку"  HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="16"/>
+        </Border>
+        <TextBox x:Name="InputTextBox" HorizontalAlignment="Left" Height="28" Margin="464,246,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+        <TextBlock x:Name="OutputTextBlock" HorizontalAlignment="Left" Height="86" TextWrapping="Wrap" VerticalAlignment="Top" Width="271" Margin="42,260,0,0" Background="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
+        <Button x:Name="button" Content="Поменять ExifData" HorizontalAlignment="Left" Height="30" Margin="466,288,0,0" VerticalAlignment="Top" Width="150" Background="#FFE0E0E0" Click="ReplaceExif_Click"/>
+        <Button Content="Показать ExifData" HorizontalAlignment="Left" Height="30" Margin="619,288,0,0" VerticalAlignment="Top" Width="150" Click="ShowExif_Click"/>
     </Grid>
 </Window>

@@ -5,15 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dekstop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid HorizontalAlignment="Center" Width="800" Height="434" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5">
-        <Rectangle HorizontalAlignment="Left" Height="41" Margin="42,167,0,0" Stroke="Black" VerticalAlignment="Top" Width="221"/>
-        <Border Name="DropArea" BorderBrush="Gray" BorderThickness="2" CornerRadius="5" AllowDrop="True" Background="LightGray" DragEnter="DropArea_DragEnter" Drop="DropArea_Drop" Margin="464,23,36,217">
+        Title="MainWindow" Height="700" Width="1200">
+    <Grid HorizontalAlignment="Center" Width="1200" Height="700" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+        <Border Name="DropArea" BorderBrush="Gray" BorderThickness="2" CornerRadius="5" AllowDrop="True" Background="LightGray" DragEnter="DropArea_DragEnter" Drop="DropArea_Drop" Margin="704,23,36,322">
             <TextBlock Text="Перетащите сюда картинку"  HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="16"/>
         </Border>
-        <TextBox x:Name="InputTextBox" HorizontalAlignment="Left" Height="28" Margin="464,246,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBlock x:Name="OutputTextBlock" HorizontalAlignment="Left" Height="86" TextWrapping="Wrap" VerticalAlignment="Top" Width="271" Margin="42,260,0,0" Background="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
-        <Button x:Name="button" Content="Поменять ExifData" HorizontalAlignment="Left" Height="30" Margin="466,288,0,0" VerticalAlignment="Top" Width="150" Background="#FFE0E0E0" Click="ReplaceExif_Click"/>
-        <Button Content="Показать ExifData" HorizontalAlignment="Left" Height="30" Margin="619,288,0,0" VerticalAlignment="Top" Width="150" Click="ShowExif_Click"/>
+        <Button x:Name="button" Content="Поменять ExifData" HorizontalAlignment="Left" Height="30" Margin="195,239,0,0" VerticalAlignment="Top" Width="438" Background="#FFE0E0E0" Click="ReplaceExif_Click"/>
+        <TextBox x:Name="ArtistTextBox" HorizontalAlignment="Left" Height="28" Margin="195,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="438" Text=""/>
+        <TextBox x:Name="CopyrightTextBox" HorizontalAlignment="Left" Height="28" Margin="195,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="438" Text=""/>
+        <TextBox x:Name="ImageDescriptionTextBox" HorizontalAlignment="Left" Height="28" Margin="195,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="438" Text="" RenderTransformOrigin="0.495,0.544"/>
+        <TextBox x:Name="CommentTextBox" HorizontalAlignment="Left" Height="28" Margin="195,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="438" Text=""/>
+        <TextBlock HorizontalAlignment="Left" Height="28" Text="Artist" VerticalAlignment="Top" Width="104" Margin="112,60,0,0" TextAlignment="Center" TextWrapping="Wrap" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Height="28" Text="Copyright" VerticalAlignment="Top" Width="104" Margin="97,100,0,0" TextAlignment="Center" TextWrapping="Wrap" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Height="28" Text="Image Description" VerticalAlignment="Top" Width="141" Margin="49,140,0,0" TextAlignment="Center" TextWrapping="Wrap" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Height="28" Text="Comment" VerticalAlignment="Top" Width="104" Margin="97,180,0,0" TextAlignment="Center" TextWrapping="Wrap" FontSize="16"/>
     </Grid>
 </Window>

@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
 using ImageMagick;
 using static ExifInput;
 
@@ -19,11 +21,11 @@ namespace Dekstop
 
         private void DropArea_DragEnter(object sender, DragEventArgs e)
         {
-            // Проверяем, есть ли данные типа файлов
+
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {          
-                e.Effects = DragDropEffects.Copy; // визуальный эффект
-                DropArea.Background = Brushes.LightGreen; // визуальный отклик
+                e.Effects = DragDropEffects.Copy;
+                DropArea.Background = Brushes.LightGreen;
             }
             else
             {
@@ -31,24 +33,49 @@ namespace Dekstop
             }
         }
 
-        // Когда объект отпущен
         private void DropArea_Drop(object sender, DragEventArgs e)
         {
-            DropArea.Background = Brushes.LightGray; // возвращаем фон
+            DropArea.Background = Brushes.LightGray;
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                // Получаем массив путей к файлам
+
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                // Берем первый файл (можно обработать все)
                 filePath = files[0];
+
+                
 
                 string ext = System.IO.Path.GetExtension(filePath).ToLower();
                 if (!(ext == ".png" || ext == ".jpg" || ext == ".jpeg"))
                 {
                     MessageBox.Show("Файл не является картинкой!");
                     filePath = null;
+                }
+                else
+                { 
+                    //Image img = new Image();
+                    //img.Source = new BitmapImage(new Uri(filePath));
+                    //img.Stretch = Stretch.Uniform;
+                    //DropArea.Child = img;
+
+                    var mapping = new Dictionary<ExifTag, TextBox>
+                    {
+                        { ExifTag.Artist, ArtistTextBox },
+                        { ExifTag.Copyright, CopyrightTextBox },
+                        { ExifTag.ImageDescription, ImageDescriptionTextBox },
+                        { ExifTag.UserComment, CommentTextBox }
+                    };
+                    var ExifData = GetExifText(filePath);
+                    foreach (var item in ExifData)
+                    {
+                        var tag = item.Tag;
+                        var text = item.ToString();
+                        if (!mapping.ContainsKey(tag)) continue;
+                        var tb = mapping[tag];
+                        tb.Text = text;
+                    }
+
                 }
             }
         }
@@ -61,21 +88,22 @@ namespace Dekstop
             }
             else
             {
-                string input = InputTextBox.Text;
-
-                Replace(ExifTag.ImageDescription, filePath, input);
-            }
-        }
-
-        private void ShowExif_Click(object sender, RoutedEventArgs e)
-        {
-            if (filePath == null)
-            {
-                MessageBox.Show("Картнка не вставлена");
-            }
-            else
-            {
-                OutputTextBlock.Text = GetExifText(filePath);
+                var mapping = new Dictionary<ExifTag, TextBox>
+                    {
+                        { ExifTag.Artist, ArtistTextBox },
+                        { ExifTag.Copyright, CopyrightTextBox },
+                        { ExifTag.ImageDescription, ImageDescriptionTextBox },
+                        { ExifTag.UserComment, CommentTextBox }
+                    };
+                var ExifData = GetExifText(filePath);
+                foreach (var item in ExifData)
+                {
+                    var tag = item.Tag;
+                    if (!mapping.ContainsKey(tag)) continue;
+                    var tb = mapping[tag];
+                    Replace(tag, filePath, tb.Text);
+                    tb.Text = item.ToString();
+                }
             }
         }
     }

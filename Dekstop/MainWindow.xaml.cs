@@ -53,25 +53,27 @@ namespace Dekstop
                     filePath = null;
                 }
                 else
-                {
-                    Image img = new Image();
-                    img.Source = new BitmapImage(new Uri(filePath));
-                    img.Stretch = Stretch.Uniform;
-                    DropArea.Child = img;
+                { 
+                    //Image img = new Image();
+                    //img.Source = new BitmapImage(new Uri(filePath));
+                    //img.Stretch = Stretch.Uniform;
+                    //DropArea.Child = img;
 
                     var mapping = new Dictionary<ExifTag, TextBox>
                     {
                         { ExifTag.Artist, ArtistTextBox },
                         { ExifTag.Copyright, CopyrightTextBox },
                         { ExifTag.ImageDescription, ImageDescriptionTextBox },
-                        { ExifTag.Model, ModelTextBox }
+                        { ExifTag.UserComment, CommentTextBox }
                     };
-                    foreach (var item in GetExifText(filePath))
+                    var ExifData = GetExifText(filePath);
+                    foreach (var item in ExifData)
                     {
                         var tag = item.Tag;
+                        var text = item.ToString();
                         if (!mapping.ContainsKey(tag)) continue;
                         var tb = mapping[tag];
-                        tb.Text = item.ToString();
+                        tb.Text = text;
                     }
 
                 }
@@ -91,13 +93,16 @@ namespace Dekstop
                         { ExifTag.Artist, ArtistTextBox },
                         { ExifTag.Copyright, CopyrightTextBox },
                         { ExifTag.ImageDescription, ImageDescriptionTextBox },
-                        { ExifTag.Model, ModelTextBox }
+                        { ExifTag.UserComment, CommentTextBox }
                     };
-                foreach (var item in mapping)
+                var ExifData = GetExifText(filePath);
+                foreach (var item in ExifData)
                 {
-                    var tag = item.Key;
-                    var tb = item.Value;
-                    Replace((ExifTag<string>)tag, filePath, tb.Text);
+                    var tag = item.Tag;
+                    if (!mapping.ContainsKey(tag)) continue;
+                    var tb = mapping[tag];
+                    Replace(tag, filePath, tb.Text);
+                    tb.Text = item.ToString();
                 }
             }
         }

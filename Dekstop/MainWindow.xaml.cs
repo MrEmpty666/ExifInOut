@@ -49,7 +49,7 @@ namespace Dekstop
                 string ext = System.IO.Path.GetExtension(filePath).ToLower();
                 if (!(ext == ".png" || ext == ".jpg" || ext == ".jpeg"))
                 {
-                    MessageBox.Show("Файл не является картинкой!");
+                    MessageBox.Show("Неправильный формат файла");
                     filePath = null;
                 }
                 else
@@ -76,7 +76,7 @@ namespace Dekstop
         {
             if (filePath == null)
             {
-                MessageBox.Show("Картнка не вставлена");
+                MessageBox.Show("Файл не вставлен");
 
             }
             else

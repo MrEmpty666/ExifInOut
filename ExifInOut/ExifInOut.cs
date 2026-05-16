@@ -4,7 +4,7 @@ using static System.Net.Mime.MediaTypeNames;
 
     public class ExifInput
     {
-        static public void Replace(ExifTag tag, string path, string text)
+        static public void Replace(ExifTag<string> tag, string path, string text)
         {
             MagickImage image = new MagickImage(path);
             using (image)
@@ -13,7 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 
                 Console.Write(tag.ToString() + ": ");
 
-                profile.SetValue((ExifTag<string>)tag, text);
+                profile.SetValue(tag, text);
                 image.SetProfile(profile);
 
                 image.Write(path);

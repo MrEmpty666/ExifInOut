@@ -10,14 +10,14 @@
         <Border Name="DropArea" BorderBrush="Gray" BorderThickness="2" CornerRadius="5" AllowDrop="True" Background="LightGray" DragEnter="DropArea_DragEnter" Drop="DropArea_Drop" Margin="704,23,36,322">
             <TextBlock Text="Перетащите сюда картинку"  HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="16"/>
         </Border>
-        <Button x:Name="button" Content="Поменять ExifData" HorizontalAlignment="Left" Height="30" Margin="195,239,0,0" VerticalAlignment="Top" Width="438" Background="#FFE0E0E0" Click="ReplaceExif_Click"/>
+        <Button x:Name="ChangeButton" Content="Поменять Exif" HorizontalAlignment="Left" Height="30" Margin="195,239,0,0" VerticalAlignment="Top" Width="438" Background="#FFE0E0E0" Click="ReplaceExif_Click"/>
         <TextBox x:Name="ArtistTextBox" HorizontalAlignment="Left" Height="28" Margin="195,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="438" Text=""/>
         <TextBox x:Name="CopyrightTextBox" HorizontalAlignment="Left" Height="28" Margin="195,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="438" Text=""/>
         <TextBox x:Name="ImageDescriptionTextBox" HorizontalAlignment="Left" Height="28" Margin="195,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="438" Text="" RenderTransformOrigin="0.495,0.544"/>
-        <TextBox x:Name="CommentTextBox" HorizontalAlignment="Left" Height="28" Margin="195,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="438" Text=""/>
+        <TextBox x:Name="ModelTextBox" HorizontalAlignment="Left" Height="28" Margin="195,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="438" Text=""/>
         <TextBlock HorizontalAlignment="Left" Height="28" Text="Artist" VerticalAlignment="Top" Width="104" Margin="112,60,0,0" TextAlignment="Center" TextWrapping="Wrap" FontSize="16"/>
         <TextBlock HorizontalAlignment="Left" Height="28" Text="Copyright" VerticalAlignment="Top" Width="104" Margin="97,100,0,0" TextAlignment="Center" TextWrapping="Wrap" FontSize="16"/>
         <TextBlock HorizontalAlignment="Left" Height="28" Text="Image Description" VerticalAlignment="Top" Width="141" Margin="49,140,0,0" TextAlignment="Center" TextWrapping="Wrap" FontSize="16"/>
-        <TextBlock HorizontalAlignment="Left" Height="28" Text="Comment" VerticalAlignment="Top" Width="104" Margin="97,180,0,0" TextAlignment="Center" TextWrapping="Wrap" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Height="28" Text="Model" VerticalAlignment="Top" Width="104" Margin="109,180,0,0" TextAlignment="Center" TextWrapping="Wrap" FontSize="16"/>
     </Grid>
 </Window>

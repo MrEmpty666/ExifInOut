@@ -54,11 +54,6 @@ namespace Dekstop
                 }
                 else
                 {
-                    Image img = new Image();
-                    img.Source = new BitmapImage(new Uri(filePath));
-                    img.Stretch = Stretch.Uniform;
-                    DropArea.Child = img;
-
                     var mapping = new Dictionary<ExifTag, TextBox>
                     {
                         { ExifTag.Artist, ArtistTextBox },

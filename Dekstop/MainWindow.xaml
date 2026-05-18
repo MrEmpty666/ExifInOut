@@ -8,7 +8,10 @@
         Title="MainWindow" Height="700" Width="1200">
     <Grid HorizontalAlignment="Center" Width="1200" Height="700" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
         <Border Name="DropArea" BorderBrush="Gray" BorderThickness="2" CornerRadius="5" AllowDrop="True" Background="LightGray" DragEnter="DropArea_DragEnter" Drop="DropArea_Drop" Margin="704,23,36,322">
-            <TextBlock Text="Перетащите сюда картинку"  HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="16"/>
+            <Grid>
+                <Image x:Name="ImageDisplay" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="NoImageText" Text="Перетащите сюда картинку" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+            </Grid>
         </Border>
         <Button x:Name="ChangeButton" Content="Поменять Exif" HorizontalAlignment="Left" Height="30" Margin="195,239,0,0" VerticalAlignment="Top" Width="438" Background="#FFE0E0E0" Click="ReplaceExif_Click"/>
         <TextBox x:Name="ArtistTextBox" HorizontalAlignment="Left" Height="28" Margin="195,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="438" Text=""/>

@@ -54,6 +54,14 @@ namespace Dekstop
                 }
                 else
                 {
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(filePath, UriKind.Absolute);
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    ImageDisplay.Source = bitmap;
+                    NoImageText.Visibility = Visibility.Hidden;
+
                     var mapping = new Dictionary<ExifTag, TextBox>
                     {
                         { ExifTag.Artist, ArtistTextBox },
@@ -77,23 +85,39 @@ namespace Dekstop
             if (filePath == null)
             {
                 MessageBox.Show("Файл не вставлен");
-
             }
             else
             {
                 var mapping = new Dictionary<ExifTag, TextBox>
-                    {
-                        { ExifTag.Artist, ArtistTextBox },
-                        { ExifTag.Copyright, CopyrightTextBox },
-                        { ExifTag.ImageDescription, ImageDescriptionTextBox },
-                        { ExifTag.Model, ModelTextBox }
-                    };
+                {
+                    { ExifTag.Artist, ArtistTextBox },
+                    { ExifTag.Copyright, CopyrightTextBox },
+                    { ExifTag.ImageDescription, ImageDescriptionTextBox },
+                    { ExifTag.Model, ModelTextBox }
+                };
+        
                 foreach (var item in mapping)
                 {
                     var tag = item.Key;
                     var tb = item.Value;
                     Replace((ExifTag<string>)tag, filePath, tb.Text);
                 }
+        
+                RefreshImage();
+            }
+        }
+
+        private void RefreshImage()
+        {
+            if (filePath != null)
+            {
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(filePath, UriKind.Absolute);
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+                bitmap.Freeze();
+                ImageDisplay.Source = bitmap;
             }
         }
     }

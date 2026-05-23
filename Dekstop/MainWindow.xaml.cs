@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
+using System.Collections.Generic;
 using ImageMagick;
 using static ExifInput;
 
@@ -21,7 +22,6 @@ namespace Dekstop
 
         private void DropArea_DragEnter(object sender, DragEventArgs e)
         {
-
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {          
                 e.Effects = DragDropEffects.Copy;
@@ -39,12 +39,8 @@ namespace Dekstop
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
                 filePath = files[0];
-
-                
 
                 string ext = System.IO.Path.GetExtension(filePath).ToLower();
                 if (!(ext == ".png" || ext == ".jpg" || ext == ".jpeg"))
@@ -54,6 +50,7 @@ namespace Dekstop
                 }
                 else
                 {
+                    //Загрузить изображение и отобразить его
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.UriSource = new Uri(filePath, UriKind.Absolute);
@@ -62,24 +59,12 @@ namespace Dekstop
                     ImageDisplay.Source = bitmap;
                     NoImageText.Visibility = Visibility.Hidden;
 
-                    var mapping = new Dictionary<ExifTag, TextBox>
-                    {
-                        { ExifTag.Artist, ArtistTextBox },
-                        { ExifTag.Copyright, CopyrightTextBox },
-                        { ExifTag.ImageDescription, ImageDescriptionTextBox },
-                        { ExifTag.Model, ModelTextBox }
-                    };
-                    foreach (var item in GetExifText(filePath))
-                    {
-                        var tag = item.Tag;
-                        if (!mapping.ContainsKey(tag)) continue;
-                        var tb = mapping[tag];
-                        tb.Text = item.ToString();
-                    }
-
+                    //Показать exif данные
+                    LoadExifToTextBoxes(filePath);
                 }
             }
         }
+
         private void ReplaceExif_Click(object sender, RoutedEventArgs e)
         {
             if (filePath == null)
@@ -95,14 +80,13 @@ namespace Dekstop
                     { ExifTag.ImageDescription, ImageDescriptionTextBox },
                     { ExifTag.Model, ModelTextBox }
                 };
-        
+
                 foreach (var item in mapping)
                 {
                     var tag = item.Key;
                     var tb = item.Value;
-                    Replace((ExifTag<string>)tag, filePath, tb.Text);
+                    Replace((ExifTag<string>)tag, filePath, tb.Text ?? string.Empty);
                 }
-        
                 RefreshImage();
             }
         }
@@ -118,6 +102,32 @@ namespace Dekstop
                 bitmap.EndInit();
                 bitmap.Freeze();
                 ImageDisplay.Source = bitmap;
+
+                LoadExifToTextBoxes(filePath);
+            }
+        }
+
+        private void LoadExifToTextBoxes(string path)
+        {
+            var mapping = new Dictionary<ExifTag, TextBox>
+            {
+                { ExifTag.Artist, ArtistTextBox },
+                { ExifTag.Copyright, CopyrightTextBox },
+                { ExifTag.ImageDescription, ImageDescriptionTextBox },
+                { ExifTag.Model, ModelTextBox }
+            };
+
+            foreach (var tb in mapping.Values)
+            {
+                tb.Text = string.Empty;
+            }
+
+            foreach (var item in GetExifText(path))
+            {
+                var tag = item.Tag;
+                if (!mapping.ContainsKey(tag)) continue;
+                var tb = mapping[tag];
+                tb.Text = item.ToString() ?? string.Empty;
             }
         }
     }

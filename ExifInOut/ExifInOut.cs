@@ -24,7 +24,7 @@ using static System.Net.Mime.MediaTypeNames;
         static public IReadOnlyList<IExifValue> GetExifText(string path)
         {
             MagickImage image = new MagickImage(path);
-            var profile = image.GetExifProfile();
+            var profile = image.GetExifProfile() ?? new ExifProfile();
         return profile.Values;
         }
     }
